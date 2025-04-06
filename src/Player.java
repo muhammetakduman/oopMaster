@@ -54,6 +54,11 @@ public class Player {
         this.setCharName(gameChar.getName());
     }
 
+
+    public void selectLoc(){
+
+    }
+
 /// getter setter method
     public Player(String name){
         this.name = name;
