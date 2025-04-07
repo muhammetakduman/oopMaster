@@ -1,5 +1,4 @@
 import java.util.Scanner;
-import java.util.SortedMap;
 
 public class Game {
     private Scanner input = new Scanner(System.in);
@@ -7,6 +6,7 @@ public class Game {
     public void start(){
         System.out.println("Welcome the Adventure Game");
         System.out.println("Please enter Name :");
+
         //String playerName = input.nextLine();
 
 
@@ -16,12 +16,11 @@ public class Game {
         System.out.println("Please Chooise character");
         player.selectChar();
 
-
         ///  location logic
 
         Location location = null;
         while (true){
-
+            player.printInfo();
             System.out.println("Location");
             System.out.println("---------------");
             System.out.println("1- Safe House  \n *****FULL HEALTY***** \n ***** THERE ARE NO MONSTER HERE ******** ");

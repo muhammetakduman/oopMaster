@@ -1,6 +1,9 @@
+import java.util.Scanner;
+
 public abstract class Location {
     private Player player;
     private String name;
+    public static Scanner input = new Scanner(System.in);
 
 
     /// constructur
