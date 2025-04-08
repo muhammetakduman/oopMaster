@@ -9,41 +9,78 @@ public class ToolStoreLoc extends NormalLoc {
     /// LOCATİON LOGİC
     @Override
     boolean onLocation() {
-        System.out.println("---------------------------------");
-        System.out.println("Welcome Tool STORE");
-        System.out.println("It's safe enough to shop here.");
-        System.out.println("---------------------------------");
-        System.out.println("1  --> Weapon");
-        System.out.println("2 --> Armor");
-        System.out.println("3 --> Exit");
-        System.out.println("Your choice :");
+        boolean showMenu = true;
+        while (showMenu){
+            System.out.println("---------------------------------");
+            System.out.println("Welcome Tool STORE");
+            System.out.println("It's safe enough to shop here.");
+            System.out.println("---------------------------------");
+            System.out.println("1  --> Weapon");
+            System.out.println("2 --> Armor");
+            System.out.println("3 --> Exit");
+            System.out.println("Your choice :");
 
-        int selectCase = input.nextInt();
-        while (selectCase<1 || selectCase>3){
-            System.out.println("Invalid value, please heed the instructions.");
-            selectCase = input.nextInt();
+            int selectCase = input.nextInt();
+            while (selectCase<1 || selectCase>3){
+                System.out.println("Invalid value, please heed the instructions.");
+                selectCase = input.nextInt();
+            }
+            switch (selectCase){
+                case 1:
+                    printWeapon();
+                    buyWeapon();
+                    break;
+                case 2:
+                    printArmor();
+                    buyArmor();
+                    break;
+                case 3:
+                    System.out.println("Exit is being made, you are being directed to the secure area.");
+                    showMenu = false;
+                    break;
+
+            }
         }
-        switch (selectCase){
-            case 1:
-                printWeapon();
-                buyWeapon();
-                break;
-            case 2:
-                printArmor();
-                break;
-            case 3:
-                System.out.println("Exit is being made, you are being directed to the secure area.");
-                onLocation();
-                return true;
-
-        }
-
         return true;
+
+    }
+
+    private void buyArmor() {
+        System.out.println("_-_-_-_-_ Choice Armor  _-_-_-_-_");
+        int selectArmorID = input.nextInt();
+
+
+        while (selectArmorID<1 || selectArmorID> Armor.armors().length){
+            System.out.println("Invalid value : Correct take Armor");
+            selectArmorID = input.nextInt();
+        }
+        Armor selectedArmor = Armor.getArmorObjById(selectArmorID);
+        if (selectedArmor != null){
+            if (selectedArmor.getPrice() > this.getPlayer().getMoney()){
+                System.out.println("You do not have enough money.");
+            }else{
+
+                // buy zone:
+                System.out.println(selectedArmor.getName() + "you bought his armoRrRrRrRrRr");
+                int balance = this.getPlayer().getMoney()  - selectedArmor.getPrice();
+                this.getPlayer().setMoney(balance);
+                System.out.println("Money Left :" + this.getPlayer().getMoney());
+                System.out.println("Your previous weapon : " +this.getPlayer().getInventory().getWeapon().getName());
+
+                this.getPlayer().getInventory().setArmor(selectedArmor);
+                System.out.println("New Armor :" + this.getPlayer().getInventory().getArmor().getName());
+            }
+        }
+
     }
 
     /// PRİNT SCREEN ALL ARMOR
     private void printArmor() {
         System.out.println("******* ARMOR ********");
+        System.out.println();
+        for (Armor a : Armor.armors()){
+            System.out.println(a.getId() + " - " +  a.getName() +" " + "<Money :" + a.getPrice() + " " + "<Block :" + a.getBlock());
+        }
 
     }
 
@@ -86,4 +123,5 @@ public class ToolStoreLoc extends NormalLoc {
             }
         }
     }
+
 }
