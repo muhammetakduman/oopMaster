@@ -49,26 +49,29 @@ public class ToolStoreLoc extends NormalLoc {
         System.out.println("_-_-_-_-_ Choice Armor  _-_-_-_-_");
         int selectArmorID = input.nextInt();
 
-
-        while (selectArmorID<1 || selectArmorID> Armor.armors().length){
+        while (selectArmorID<0 || selectArmorID> Armor.armors().length){
             System.out.println("Invalid value : Correct take Armor");
             selectArmorID = input.nextInt();
         }
-        Armor selectedArmor = Armor.getArmorObjById(selectArmorID);
-        if (selectedArmor != null){
-            if (selectedArmor.getPrice() > this.getPlayer().getMoney()){
-                System.out.println("You do not have enough money.");
-            }else{
 
-                // buy zone:
-                System.out.println(selectedArmor.getName() + "you bought his armoRrRrRrRrRr");
-                int balance = this.getPlayer().getMoney()  - selectedArmor.getPrice();
-                this.getPlayer().setMoney(balance);
-                System.out.println("Money Left :" + this.getPlayer().getMoney());
-                System.out.println("Your previous weapon : " +this.getPlayer().getInventory().getWeapon().getName());
 
-                this.getPlayer().getInventory().setArmor(selectedArmor);
-                System.out.println("New Armor :" + this.getPlayer().getInventory().getArmor().getName());
+        if (selectArmorID != 0){
+            Armor selectedArmor = Armor.getArmorObjById(selectArmorID);
+
+            if (selectedArmor != null){
+                if (selectedArmor.getPrice() > this.getPlayer().getMoney()){
+                    System.out.println("You do not have enough money.");
+                }
+                }else{
+                    // buy zone:
+                    System.out.println(selectedArmor.getName() + "you bought his armoRrRrRrRrRr");
+                    int balance = this.getPlayer().getMoney()  - selectedArmor.getPrice();
+                    this.getPlayer().setMoney(balance);
+                    System.out.println("Money Left :" + this.getPlayer().getMoney());
+                    System.out.println("Your previous weapon : " +this.getPlayer().getInventory().getWeapon().getName());
+
+                    this.getPlayer().getInventory().setArmor(selectedArmor);
+                    System.out.println("New Armor :" + this.getPlayer().getInventory().getArmor().getName());
             }
         }
 
@@ -81,6 +84,7 @@ public class ToolStoreLoc extends NormalLoc {
         for (Armor a : Armor.armors()){
             System.out.println(a.getId() + " - " +  a.getName() +" " + "<Money :" + a.getPrice() + " " + "<Block :" + a.getBlock());
         }
+        System.out.println("0 - Exit");
 
     }
 
@@ -92,6 +96,7 @@ public class ToolStoreLoc extends NormalLoc {
         for (Weapon w : Weapon.weapons()){
             System.out.println(w.getId() + "- " + w.getName() + "<Money :" +  w.getPrice() + " < Damage :" + w.getDamage());
         }
+        System.out.println("0 - Exit");
     }
 
 
@@ -101,27 +106,31 @@ public class ToolStoreLoc extends NormalLoc {
         int selectWeaponID = input.nextInt();
 
 
-        while (selectWeaponID<1 || selectWeaponID> Weapon.weapons().length){
+        while (selectWeaponID<0 || selectWeaponID> Weapon.weapons().length){
             System.out.println("Invalid value : Correct take Weapon");
             selectWeaponID = input.nextInt();
         }
-        Weapon selectedWeapon = Weapon.getWeaponObjById(selectWeaponID);
-        if (selectedWeapon != null){
-            if (selectedWeapon.getPrice() > this.getPlayer().getMoney()){
-                System.out.println("You do not have enough money.");
-            }else{
+        if (selectWeaponID != 0){
+            Weapon selectedWeapon = Weapon.getWeaponObjById(selectWeaponID);
+            if (selectedWeapon != null){
+                if (selectedWeapon.getPrice() > this.getPlayer().getMoney()){
+                    System.out.println("You do not have enough money.");
+                }else{
 
-                // buy zone:
-                System.out.println(selectedWeapon.getName() + "you bought his weaponNnNnNnNn");
-                int balance = this.getPlayer().getMoney()  - selectedWeapon.getPrice();
-                this.getPlayer().setMoney(balance);
-                System.out.println("Money Left :" + this.getPlayer().getMoney());
-                System.out.println("Your previous weapon : " +this.getPlayer().getInventory().getWeapon().getName());
+                    // buy zone:
+                    System.out.println(selectedWeapon.getName() + "you bought his weaponNnNnNnNn");
+                    int balance = this.getPlayer().getMoney()  - selectedWeapon.getPrice();
+                    this.getPlayer().setMoney(balance);
+                    System.out.println("Money Left :" + this.getPlayer().getMoney());
+                    System.out.println("Your previous weapon : " +this.getPlayer().getInventory().getWeapon().getName());
 
-                this.getPlayer().getInventory().setWeapon(selectedWeapon);
-                System.out.println("New Weapon :" + this.getPlayer().getInventory().getWeapon().getName());
+                    this.getPlayer().getInventory().setWeapon(selectedWeapon);
+                    System.out.println("New Weapon :" + this.getPlayer().getInventory().getWeapon().getName());
+                }
             }
         }
+
+
     }
 
 }
