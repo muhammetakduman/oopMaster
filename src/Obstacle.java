@@ -3,13 +3,17 @@ public abstract class Obstacle {
     private String name;
     private int damage;
     private int healthy;
+    private int originalHealthy;
+    private int award;
 
     /// const
-    public Obstacle(int id, String name, int damage, int healthy) {
+    public Obstacle(int id, String name, int damage, int healthy  ,int award) {
         this.id = id;
         this.name = name;
         this.damage = damage;
         this.healthy = healthy;
+        this.originalHealthy = originalHealthy;
+        this.award = award;
     }
 
     /// getter-setter
@@ -42,6 +46,26 @@ public abstract class Obstacle {
     }
 
     public void setHealthy(int healthy) {
+        if (healthy <= 0){
+            healthy =0;
+        }
         this.healthy = healthy;
     }
+
+    public int getOriginalHealthy() {
+        return originalHealthy;
+    }
+    public void setOriginalHealthy(int originalHealthy) {
+        this.originalHealthy = originalHealthy;
+    }
+
+    public int getAward() {
+        return award;
+    }
+
+    public void setAward(int award) {
+        this.award = award;
+    }
+
+
 }

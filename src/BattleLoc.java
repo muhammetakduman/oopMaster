@@ -31,10 +31,71 @@ public abstract class BattleLoc extends Location {
         String selectCase = input.nextLine();
         selectCase = selectCase.toUpperCase();
         if (selectCase.equals("S")){
-            System.out.println("Savaş işlemleri olacak");
-            /// savaş işlemleri ....
+            if (combat(obsNumber)){
+                System.out.println(this.getName() + "Tüm düşmanları yendiniz !");
+                return true;
+            }
+
+        }
+        if (this.getPlayer().getHealthy() <0){
+            System.out.println("Öldünüz ...");
+            return false;
         }
         return true;
+    }
+    public boolean combat(int obsNumber){
+        for (int i = 1; i < obsNumber ; i++) {
+            this.getObstacle().setHealthy(this.getObstacle().getOriginalHealthy());
+            playerStatus();
+            obstacleStatus(i);
+            while (this.getPlayer().getHealthy()>0 && this.getObstacle().getHealthy()>0)
+                System.out.println("<V>ur veya <K>aç :");
+                String selectCombat = input.nextLine().toUpperCase();
+                if (selectCombat.equals("V")){
+                    System.out.println("Canavara vurdunuz !!");
+                    this.getObstacle().setHealthy(this.getObstacle().getHealthy() - this.getPlayer().getDamage());
+                    afterHit();
+                    if (this.obstacle.getHealthy() > 0){
+                        System.out.println();
+                        System.out.println("Canavar size vurdu !");
+                        int obstacleDamage = this.getObstacle().getDamage() - this.getPlayer().getInventory().getArmor().getBlock();
+                        if (obstacleDamage < 0 ){
+                            obstacleDamage = 0;
+                        }
+                        this.getPlayer().setHealthy(this.getPlayer().getHealthy() - obstacleDamage);
+                        afterHit();
+
+                    }
+                }
+        }
+        return false;
+
+    }
+
+    private void afterHit() {
+        System.out.println("Yout healthy :" + this.getPlayer().getHealthy());
+        System.out.println(this.getObstacle().getName() + "Canı :" + this.getObstacle().getHealthy());
+        System.out.println();
+
+    }
+
+    private void obstacleStatus(int i) {
+        System.out.println( i +" . " +this.obstacle.getName() + "Statüs volume :");
+        System.out.println("----------------");
+        System.out.println("Healthy :" + this.obstacle.getHealthy());
+        System.out.println("Damage :" + this.obstacle.getDamage());
+        System.out.println("Award :" +this.obstacle.getAward());
+    }
+
+    private void playerStatus() {
+        System.out.println("Player Value :");
+        System.out.println("----------------");
+        System.out.println("Healthy :" + this.getPlayer().getHealthy());
+        System.out.println("Damage : " + this.getPlayer().getTotalDamage());
+        System.out.println("Money :" + this.getPlayer().getMoney());
+        System.out.println("Weapon :" +this.getPlayer().getInventory().getWeapon().getName());
+        System.out.println("Armor :" + this.getPlayer().getInventory().getArmor().getName());
+        System.out.println("Block :" + this.getPlayer().getInventory().getArmor().getBlock());
     }
 
 
