@@ -37,7 +37,7 @@ public abstract class BattleLoc extends Location {
             }
 
         }
-        if (this.getPlayer().getHealthy() <0){
+        if (this.getPlayer().getHealthy() <=0){
             System.out.println("Öldünüz ...");
             return false;
         }
@@ -68,11 +68,22 @@ public abstract class BattleLoc extends Location {
                         }
                         this.getPlayer().setHealthy(this.getPlayer().getHealthy() - obstacleDamage);
                         afterHit();
+
                     }
+                } else {
+                    return false;
                 }
             }
+            if (this.getObstacle().getHealthy() < this.getPlayer().getHealthy()){
+                System.out.println("Victory !!!!");
+                System.out.println(this.getObstacle().getAward() + " win Award , check your Money bagg .!.");
+                this.getPlayer().setMoney(this.getPlayer().getMoney()+ this.getObstacle().getAward());
+                System.out.println(" Update Your Money : " + this.getPlayer().getMoney());
+            } else {
+                return false;
+            }
         }
-        return false;
+        return true;
     }
 
     private void afterHit() {
