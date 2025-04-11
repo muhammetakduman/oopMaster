@@ -3,6 +3,7 @@ import java.util.Scanner;
 public class Player {
     private int damage;
     private int healthy;
+    private int originalHealthy;
     private int money;
     private String name;
     private Scanner input  =  new Scanner(System.in);
@@ -49,6 +50,7 @@ public class Player {
     public void initPlayer(GameChar gameChar){
         this.setDamage(gameChar.getDamage());
         this.setHealthy(gameChar.getHealth());
+        this.setHealthy(gameChar.getHealth());
         this.setMoney(gameChar.getMoney());
         this.setCharName(gameChar.getName());
     }
@@ -64,7 +66,17 @@ public class Player {
 
     }
 
-/// getter setter method
+
+
+    // getter setter method
+    public int getOriginalHealthy() {
+        return originalHealthy;
+    }
+
+    public void setOriginalHealthy(int originalHealthy) {
+        this.originalHealthy = originalHealthy;
+    }
+
     public Player(String name){
         this.name = name;
         this.inventory =new Inventory();
@@ -88,6 +100,9 @@ public class Player {
     }
 
     public void setHealthy(int healthy) {
+        if (healthy < 0){
+            healthy = 0;
+        }
         this.healthy = healthy;
     }
 
