@@ -42,6 +42,7 @@ public abstract class BattleLoc extends Location {
             return false;
         }
         return true;
+        /// braaaaaa
     }
     public boolean combat(int obsNumber){
         for (int i = 1; i < obsNumber ; i++) {
