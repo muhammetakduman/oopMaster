@@ -7,12 +7,12 @@ public abstract class Obstacle {
     private int award;
 
     /// const
-    public Obstacle(int id, String name, int damage, int healthy  ,int award) {
+    public Obstacle(int id, String name, int damage, int healthy,int award) {
         this.id = id;
         this.name = name;
         this.damage = damage;
         this.healthy = healthy;
-        this.originalHealthy = originalHealthy;
+        this.originalHealthy = healthy;
         this.award = award;
     }
 

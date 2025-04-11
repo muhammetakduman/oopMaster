@@ -42,35 +42,37 @@ public abstract class BattleLoc extends Location {
             return false;
         }
         return true;
-        /// braaaaaa
     }
+
+
+
     public boolean combat(int obsNumber){
-        for (int i = 1; i < obsNumber ; i++) {
+        for (int i = 1; i <= obsNumber ; i++) {
             this.getObstacle().setHealthy(this.getObstacle().getOriginalHealthy());
             playerStatus();
             obstacleStatus(i);
-            while (this.getPlayer().getHealthy()>0 && this.getObstacle().getHealthy()>0)
+            while (this.getPlayer().getHealthy() > 0 && this.getObstacle().getHealthy() > 0) {
                 System.out.println("<V>ur veya <K>aç :");
                 String selectCombat = input.nextLine().toUpperCase();
-                if (selectCombat.equals("V")){
+                if (selectCombat.equals("V")) {
                     System.out.println("Canavara vurdunuz !!");
                     this.getObstacle().setHealthy(this.getObstacle().getHealthy() - this.getPlayer().getDamage());
                     afterHit();
-                    if (this.obstacle.getHealthy() > 0){
+
+                    if (this.getObstacle().getHealthy() > 0) {
                         System.out.println();
                         System.out.println("Canavar size vurdu !");
                         int obstacleDamage = this.getObstacle().getDamage() - this.getPlayer().getInventory().getArmor().getBlock();
-                        if (obstacleDamage < 0 ){
+                        if (obstacleDamage < 0) {
                             obstacleDamage = 0;
                         }
                         this.getPlayer().setHealthy(this.getPlayer().getHealthy() - obstacleDamage);
                         afterHit();
-
                     }
                 }
+            }
         }
         return false;
-
     }
 
     private void afterHit() {
@@ -81,11 +83,11 @@ public abstract class BattleLoc extends Location {
     }
 
     private void obstacleStatus(int i) {
-        System.out.println( i +" . " +this.obstacle.getName() + "Statüs volume :");
+        System.out.println( i +" . " +this.getObstacle().getName() + "Statüs volume :");
         System.out.println("----------------");
-        System.out.println("Healthy :" + this.obstacle.getHealthy());
-        System.out.println("Damage :" + this.obstacle.getDamage());
-        System.out.println("Award :" +this.obstacle.getAward());
+        System.out.println("Healthy :" + this.getObstacle().getHealthy());
+        System.out.println("Damage :" + this.getObstacle().getDamage());
+        System.out.println("Award :" +this.getObstacle().getAward());
     }
 
     private void playerStatus() {
@@ -106,7 +108,9 @@ public abstract class BattleLoc extends Location {
     }
 
 
+
     /// getter-setter
+    ///
     public Obstacle getObstacle() {
         return obstacle;
     }
