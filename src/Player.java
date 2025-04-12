@@ -6,69 +6,104 @@ public class Player {
     private int originalHealthy;
     private int money;
     private String name;
-    private Scanner input  =  new Scanner(System.in);
+    private Scanner input = new Scanner(System.in);
     private Inventory inventory;
-    private String charName; /// for ex : warrior , archer ,
+    private String charName;
+    private boolean hasFood;
+    private boolean hasWater;
+    private boolean hasFireWood;
 
-
-    void selectChar() {
-        GameChar[] charList = {new Samurai()  , new Archer(),new Knight()};
-        System.out.println("-------------------------------------------");
-        for ( GameChar gameChar : charList){
-            System.out.println("ID: " + gameChar.getId() +
-                    "\tCharacter:"+" " + gameChar.getName() +
-                    "\t Damage: " + gameChar.getDamage() +
-                    "\t Healty: " +gameChar.getHealth() +
-                    "\t Money: " + gameChar.getMoney());
-        };
-        System.out.println("-----------------------------");
-        System.out.println("Chooise an charachter !");
-        int selectChar = input.nextInt();
-        switch (selectChar){
-            case 1:
-                initPlayer(new Samurai());
-                break;
-            case 2:
-                initPlayer(new Archer());
-                break;
-            case 3:
-                initPlayer(new Knight());
-                break;
-            default:
-                System.out.println("Bir seçim yapmadınız samurai olarak oyuna başlayacaksınız.");
-                initPlayer(new Samurai());
-
-        }
-        /*System.out.println("Character :" +this.getCharName()+
-                ", Hasar :" + this.getDamage()+
-                ", Healty :" + this.getHealthy()+
-                ", Money :" +this.getMoney());*/
-
+    public Player(String name) {
+        this.name = name;
+        this.inventory = new Inventory();
     }
 
+    public boolean hasAllAwards() {
+        return hasFood && hasWater && hasFireWood;
+    }
 
-    public void initPlayer(GameChar gameChar){
+    public void selectChar() {
+        GameChar[] charList = {new Samurai(), new Archer(), new Knight()};
+        System.out.println("-------------------------------------------");
+        for (GameChar gameChar : charList) {
+            System.out.println("ID: " + gameChar.getId() +
+                    "\tCharacter: " + gameChar.getName() +
+                    "\tDamage: " + gameChar.getDamage() +
+                    "\tHealty: " + gameChar.getHealth() +
+                    "\tMoney: " + gameChar.getMoney());
+        }
+        System.out.println("-----------------------------");
+        System.out.println("Choose a character:");
+        int selectChar = input.nextInt();
+        switch (selectChar) {
+            case 1 -> initPlayer(new Samurai());
+            case 2 -> initPlayer(new Archer());
+            case 3 -> initPlayer(new Knight());
+            default -> {
+                System.out.println("Geçersiz seçim. Samurai ile başlıyorsunuz.");
+                initPlayer(new Samurai());
+            }
+        }
+    }
+    public void printAwards(){
+        System.out.println("🧾 Sahip Olduğun Ödüller:");
+        System.out.println((hasFood ? "✔️" : "❌") + " Yemek");
+        System.out.println((hasWater ? "✔️" : "❌") + " Su");
+        System.out.println((hasFireWood ? "✔️" : "❌") + " Odun");
+    }
+
+    public void initPlayer(GameChar gameChar) {
         this.setDamage(gameChar.getDamage());
         this.setHealthy(gameChar.getHealth());
-        this.setHealthy(gameChar.getHealth());
+        this.setOriginalHealthy(gameChar.getHealth());
         this.setMoney(gameChar.getMoney());
         this.setCharName(gameChar.getName());
     }
 
+    public void printInfo() {
+        String weaponName = (this.getInventory().getWeapon() != null)
+                ? this.getInventory().getWeapon().getName()
+                : "Yok";
+        String armorName = (this.getInventory().getArmor() != null)
+                ? this.getInventory().getArmor().getName()
+                : "Yok";
+        int block = (this.getInventory().getArmor() != null)
+                ? this.getInventory().getArmor().getBlock()
+                : 0;
 
-    public void printInfo(){
-        System.out.println("Weapon : " + this.getInventory().getWeapon().getName()+
-                ", Armor :" + this.getInventory().getArmor().getName()+
-                ",Block :" + this.getInventory().getArmor().getBlock()+
-                ", Damage :" + this.getDamage()+
-                ", Healthy :" + this.getHealthy()+
-                ", Money :" +this.getMoney());
-
+        System.out.println("Weapon : " + weaponName +
+                ", Armor : " + armorName +
+                ", Block : " + block +
+                ", Damage : " + this.getDamage() +
+                ", Healthy : " + this.getHealthy() +
+                ", Money : " + this.getMoney());
     }
 
+    // Getter - Setter Methods
+    public boolean hasFood() {
+        return hasFood;
+    }
 
+    public void setHasFood(boolean hasFood) {
+        this.hasFood = hasFood;
+    }
 
-    // getter setter method
+    public boolean hasWater() {
+        return hasWater;
+    }
+
+    public void setHasWater(boolean hasWater) {
+        this.hasWater = hasWater;
+    }
+
+    public boolean hasFireWood() {
+        return hasFireWood;
+    }
+
+    public void setHasFireWood(boolean hasFireWood) {
+        this.hasFireWood = hasFireWood;
+    }
+
     public int getOriginalHealthy() {
         return originalHealthy;
     }
@@ -77,13 +112,7 @@ public class Player {
         this.originalHealthy = originalHealthy;
     }
 
-    public Player(String name){
-        this.name = name;
-        this.inventory =new Inventory();
-    }
-
-
-    public int getTotalDamage(){
+    public int getTotalDamage() {
         return damage + getInventory().getWeapon().getDamage();
     }
 
@@ -100,10 +129,7 @@ public class Player {
     }
 
     public void setHealthy(int healthy) {
-        if (healthy < 0){
-            healthy = 0;
-        }
-        this.healthy = healthy;
+        this.healthy = Math.max(healthy, 0); // 0'ın altına düşmesin
     }
 
     public int getMoney() {

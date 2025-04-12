@@ -5,6 +5,15 @@ public abstract class BattleLoc extends Location {
     private Obstacle obstacle;
     private String award;
     private int maxObstacle;
+    private boolean isCompleted = false;
+
+    public boolean isCompleted(){
+        return isCompleted;
+    }
+
+    public void setCompleted(boolean completed){
+        this.isCompleted =completed;
+    }
 
 
     /// paramterleri const
@@ -13,6 +22,7 @@ public abstract class BattleLoc extends Location {
         this.obstacle = obstacle;
         this.award = award;
         this.maxObstacle = maxObstacle;
+
 
     }
 
@@ -46,45 +56,54 @@ public abstract class BattleLoc extends Location {
 
 
 
-    public boolean combat(int obsNumber){
-        for (int i = 1; i <= obsNumber ; i++) {
+    public boolean combat(int obsNumber) {
+        for (int i = 1; i <= obsNumber; i++) {
             this.getObstacle().setHealthy(this.getObstacle().getOriginalHealthy());
             playerStatus();
             obstacleStatus(i);
+
             while (this.getPlayer().getHealthy() > 0 && this.getObstacle().getHealthy() > 0) {
                 System.out.println("<V>ur veya <K>aç :");
                 String selectCombat = input.nextLine().toUpperCase();
+
                 if (selectCombat.equals("V")) {
-                    System.out.println("Canavara vurdunuz !!");
+                    System.out.println("Canavara vurdunuz!");
                     this.getObstacle().setHealthy(this.getObstacle().getHealthy() - this.getPlayer().getDamage());
                     afterHit();
 
                     if (this.getObstacle().getHealthy() > 0) {
-                        System.out.println();
-                        System.out.println("Canavar size vurdu !");
+                        System.out.println("Canavar size saldırıyor!");
                         int obstacleDamage = this.getObstacle().getDamage() - this.getPlayer().getInventory().getArmor().getBlock();
-                        if (obstacleDamage < 0) {
-                            obstacleDamage = 0;
-                        }
+                        if (obstacleDamage < 0) obstacleDamage = 0;
                         this.getPlayer().setHealthy(this.getPlayer().getHealthy() - obstacleDamage);
                         afterHit();
-
                     }
+
+                } else if (selectCombat.equals("K")) {
+                    System.out.println("⚠️ Kaçtınız, savaş iptal.");
+                    return false; // ❗Burası kritik
                 } else {
-                    return false;
+                    System.out.println("Geçersiz giriş! Sadece V veya K.");
                 }
             }
-            if (this.getObstacle().getHealthy() < this.getPlayer().getHealthy()){
-                System.out.println("Victory !!!!");
-                System.out.println(this.getObstacle().getAward() + " win Award , check your Money bagg .!.");
-                this.getPlayer().setMoney(this.getPlayer().getMoney()+ this.getObstacle().getAward());
-                System.out.println(" Update Your Money : " + this.getPlayer().getMoney());
-            } else {
+
+            if (this.getObstacle().getHealthy() > 0) {
+                System.out.println("Canavarı yenemediniz.");
                 return false;
             }
+
+            System.out.println("✔️ " + this.getObstacle().getName() + " öldürüldü!");
+            System.out.println("+ " + this.getObstacle().getAward() + " para kazandınız!");
+            this.getPlayer().setMoney(this.getPlayer().getMoney() + this.getObstacle().getAward());
         }
+
+        // Sadece buraya ulaştıysa: Tüm düşmanlar öldü
+        System.out.println("🎯 Tüm düşmanlar temizlendi!");
+        this.setCompleted(true);
         return true;
     }
+
+
 
     private void afterHit() {
         System.out.println("Yout healthy :" + this.getPlayer().getHealthy());
