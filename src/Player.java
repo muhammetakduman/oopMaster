@@ -71,13 +71,16 @@ public class Player {
                 ? this.getInventory().getArmor().getBlock()
                 : 0;
 
-        System.out.println("Weapon : " + weaponName +
-                ", Armor : " + armorName +
-                ", Block : " + block +
-                ", Damage : " + this.getDamage() +
-                ", Healthy : " + this.getHealthy() +
-                ", Money : " + this.getMoney());
+        System.out.println("------ OYUNCU DURUMU ------");
+        System.out.println("Weapon : " + weaponName);
+        System.out.println("Armor : " + armorName);
+        System.out.println("Block : " + block);
+        System.out.println("Base Damage : " + this.getDamage());
+        System.out.println("Total Damage : " + this.getTotalDamage()); // ✨ burası önemli
+        System.out.println("Healthy : " + this.getHealthy());
+        System.out.println("Money : " + this.getMoney());
     }
+
 
     // Getter - Setter Methods
     public boolean hasFood() {

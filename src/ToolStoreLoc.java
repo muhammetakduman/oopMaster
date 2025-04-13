@@ -46,35 +46,40 @@ public class ToolStoreLoc extends NormalLoc {
     }
 
     private void buyArmor() {
-        System.out.println("_-_-_-_-_ Choice Armor  _-_-_-_-_");
+        System.out.println("_-_-_-_-_ Zırh Seçimi  _-_-_-_-_");
         int selectArmorID = input.nextInt();
 
-        while (selectArmorID<0 || selectArmorID> Armor.armors().length){
-            System.out.println("Invalid value : Correct take Armor");
+        while (selectArmorID < 0 || selectArmorID > Armor.armors().length) {
+            System.out.println("Geçersiz giriş. Lütfen geçerli bir ID girin:");
             selectArmorID = input.nextInt();
         }
 
-
-        if (selectArmorID != 0){
+        if (selectArmorID != 0) {
             Armor selectedArmor = Armor.getArmorObjById(selectArmorID);
 
-            if (selectedArmor != null){
-                if (selectedArmor.getPrice() > this.getPlayer().getMoney()){
-                    System.out.println("You do not have enough money.");
-                }
-                }else{
-                    // buy zone:
-                    System.out.println(selectedArmor.getName() + "you bought his armoRrRrRrRrRr");
-                    int balance = this.getPlayer().getMoney()  - selectedArmor.getPrice();
+            if (selectedArmor != null) {
+                if (selectedArmor.getPrice() > this.getPlayer().getMoney()) {
+                    System.out.println("❌ Yeterli paranız yok.");
+                } else {
+                    // Satın alma işlemi
+                    System.out.println("🛡️ " + selectedArmor.getName() + " satın alındı!");
+                    int balance = this.getPlayer().getMoney() - selectedArmor.getPrice();
                     this.getPlayer().setMoney(balance);
-                    System.out.println("Money Left :" + this.getPlayer().getMoney());
-                    System.out.println("Your previous weapon : " +this.getPlayer().getInventory().getWeapon().getName());
+
+                    System.out.println("💰 Kalan Para: " + this.getPlayer().getMoney());
+                    System.out.println("Önceki Zırh: " + this.getPlayer().getInventory().getArmor().getName());
 
                     this.getPlayer().getInventory().setArmor(selectedArmor);
-                    System.out.println("New Armor :" + this.getPlayer().getInventory().getArmor().getName());
+
+                    // 📢 Yeni zırh bilgileri
+                    System.out.println("Yeni Zırh: " + this.getPlayer().getInventory().getArmor().getName());
+                    System.out.println("Yeni Block Değeri: " + this.getPlayer().getInventory().getArmor().getBlock());
+
+                    // Oyuncunun güncel bilgilerini göster
+                    this.getPlayer().printInfo(); // ✨ damage, block, para, zırh vs. hepsi görünür
+                }
             }
         }
-
     }
 
     /// PRİNT SCREEN ALL ARMOR
@@ -101,36 +106,41 @@ public class ToolStoreLoc extends NormalLoc {
 
 
     /// BUY WEAPON LOGİC
-    public void buyWeapon(){
-        System.out.println("_-_-_-_-_ Choice Weapon  _-_-_-_-_");
+    public void buyWeapon() {
+        System.out.println("💥 Silah Mağazasına Hoş Geldin!");
+
+        System.out.print("Seçmek istediğin silahın ID'sini gir: ");
         int selectWeaponID = input.nextInt();
 
-
-        while (selectWeaponID<0 || selectWeaponID> Weapon.weapons().length){
-            System.out.println("Invalid value : Correct take Weapon");
+        while (selectWeaponID < 0 || selectWeaponID > Weapon.weapons().length) {
+            System.out.println("⚠️ Geçersiz giriş. Lütfen geçerli bir ID gir:");
             selectWeaponID = input.nextInt();
         }
-        if (selectWeaponID != 0){
+
+        if (selectWeaponID != 0) {
             Weapon selectedWeapon = Weapon.getWeaponObjById(selectWeaponID);
-            if (selectedWeapon != null){
-                if (selectedWeapon.getPrice() > this.getPlayer().getMoney()){
-                    System.out.println("You do not have enough money.");
-                }else{
 
-                    // buy zone:
-                    System.out.println(selectedWeapon.getName() + "you bought his weaponNnNnNnNn");
-                    int balance = this.getPlayer().getMoney()  - selectedWeapon.getPrice();
+            if (selectedWeapon != null) {
+                if (selectedWeapon.getPrice() > this.getPlayer().getMoney()) {
+                    System.out.println("❌ Yeterli paran yok!");
+                } else {
+                    System.out.println("🔫 " + selectedWeapon.getName() + " satın alındı!");
+                    int balance = this.getPlayer().getMoney() - selectedWeapon.getPrice();
                     this.getPlayer().setMoney(balance);
-                    System.out.println("Money Left :" + this.getPlayer().getMoney());
-                    System.out.println("Your previous weapon : " +this.getPlayer().getInventory().getWeapon().getName());
 
+                    Weapon oldWeapon = this.getPlayer().getInventory().getWeapon();
                     this.getPlayer().getInventory().setWeapon(selectedWeapon);
-                    System.out.println("New Weapon :" + this.getPlayer().getInventory().getWeapon().getName());
+
+                    System.out.println("💰 Kalan Para: " + this.getPlayer().getMoney());
+                    System.out.println("Eski Silah: " + oldWeapon.getName());
+                    System.out.println("Yeni Silah: " + selectedWeapon.getName());
+                    System.out.println("🗡️ Yeni Toplam Hasar: " + this.getPlayer().getTotalDamage());
+
+                    this.getPlayer().printInfo(); // ➕ opsiyonel: tüm güncel bilgileri göster
                 }
             }
         }
-
-
     }
+
 
 }
