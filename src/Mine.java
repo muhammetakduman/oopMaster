@@ -22,26 +22,26 @@ public class Mine  extends BattleLoc{
         if (chance <= 15) { // Silah kazanma
             int weaponChance = rand.nextInt(100) + 1;
             if (weaponChance <= 50) {
-                System.out.println("Tabanca kazandın!");
+                System.out.println("Dolunay Kılıcı kazandın!");
                 this.getPlayer().getInventory().setWeapon(Weapon.getWeaponObjById(1)); // Tabanca
             } else if (weaponChance <= 80) {
-                System.out.println("Kılıç kazandın!");
+                System.out.println("Zehir Kılıcı kazandın!");
                 this.getPlayer().getInventory().setWeapon(Weapon.getWeaponObjById(2)); // Kılıç
             } else {
-                System.out.println("Tüfek kazandın!");
+                System.out.println("Sirius Kılıcı kazandın!");
                 this.getPlayer().getInventory().setWeapon(Weapon.getWeaponObjById(3)); // Tüfek
             }
 
         } else if (chance <= 30) { // Zırh kazanma
             int armorChance = rand.nextInt(100) + 1;
             if (armorChance <= 50) {
-                System.out.println("Hafif zırh kazandın!");
+                System.out.println("Keşiş Plaka Zırhı!");
                 this.getPlayer().getInventory().setArmor(Armor.getArmorObjById(1));
             } else if (armorChance <= 80) {
-                System.out.println("Orta zırh kazandın!");
+                System.out.println("Siyah Çelik Zırhı!");
                 this.getPlayer().getInventory().setArmor(Armor.getArmorObjById(2));
             } else {
-                System.out.println("Ağır zırh kazandın!");
+                System.out.println("Kraliyet Zırhı!");
                 this.getPlayer().getInventory().setArmor(Armor.getArmorObjById(3));
             }
 

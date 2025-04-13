@@ -64,6 +64,7 @@ public class Game {
                 break;
             }
             if (!location.onLocation()){
+
                 System.out.println("ŞAHADET ŞERBETİNİ İÇTİN  !!! G A M E   O V E R !!!");
                 break;
             }
